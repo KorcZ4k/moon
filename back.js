@@ -23,7 +23,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ===================== CONEXÃO COM MONGODB =====================
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://Korczak:Exceto1%7C@korczakcluster.hkaipeg.mongodb.net/';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
@@ -529,15 +529,20 @@ app.use((err, req, res, next) => {
 });
 
 // ===================== INICIAR SERVIDOR =====================
+// ===================== INICIAR SERVIDOR =====================
+
 app.listen(PORT, () => {
     console.log('=================================');
     console.log(`🚀 Servidor Korczak Technologies`);
-    console.log(`📍 Rodando em: http://localhost:${PORT}`);
+    console.log(`📍 Rodando localmente na porta: ${PORT}`);
     console.log(`🌐 API: http://localhost:${PORT}/api`);
     console.log(`📝 Ambiente: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🗄️  MongoDB: ${MONGODB_URI}`);
+    console.log(`🗄️  MongoDB: ${process.env.MONGODB_URI}`);
     console.log('=================================');
 });
+
+// ===================== EXPORTA PARA TESTES =====================
+module.exports = { app, Orcamento };
 
 // ===================== ENCERRAMENTO GRACEFUL =====================
 const gracefulShutdown = async () => {
