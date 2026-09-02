@@ -1,17 +1,27 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Korczak Technologies — desenvolvimento, arquitetura e soluções digitais.">
 <title>Korczak Technologies</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="topbar">
-  <a href="#inicio" class="logo" aria-label="Korczak Technologies">K<span>Z</span>.</a>
-  <nav id="nav"><a href="#sobre">Sobre</a><a href="#servicos">Serviços</a><a href="#contato">Contato</a></nav>
-  <button class="menu" aria-label="Abrir menu">☰</button>
-</header>
+<aside class="sidebar" id="sidebar">
+  <a href="#inicio" class="side-logo" aria-label="Korczak Technologies">K<span>Z</span>.</a>
+  <nav class="side-nav" aria-label="Menu principal">
+    <a href="#sobre"><span>01</span> Sobre</a>
+    <a href="#servicos"><span>02</span> Serviços</a>
+    <a href="franquias.html"><span>03</span> Franquias</a>
+    <a href="sobre-nos.html"><span>04</span> Sobre nós</a>
+    <a href="orcamento.html" class="budget-link"><span>05</span> Faça seu orçamento</a>
+    <a href="#contato"><span>06</span> Contato</a>
+  </nav>
+  <div class="side-bottom">© <span id="year"></span><br>Korczak Technologies</div>
+</aside>
+<button class="menu" aria-label="Abrir menu" aria-controls="sidebar">☰</button>
+
 <main>
 <section id="inicio" class="hero">
   <div class="grid"></div>
@@ -19,14 +29,16 @@
     <p class="overline">TECNOLOGIA · DESENVOLVIMENTO · ARQUITETURA</p>
     <h1>Korczak<br><span>Technologies.</span></h1>
     <p class="lead">Criamos soluções digitais com arquitetura, estratégia e engenharia.</p>
-    <div class="actions"><a class="primary" href="#contato">Iniciar um projeto</a><a class="secondary" href="#servicos">Explorar serviços</a></div>
+    <div class="actions"><a class="primary" href="orcamento.html">Iniciar um projeto</a><a class="secondary" href="#servicos">Explorar serviços</a></div>
   </div>
   <div class="monogram" aria-hidden="true">KZ</div>
 </section>
+
 <section id="sobre" class="section split">
   <p class="tag">01 / SOBRE</p>
-  <div><h2>Precisão para construir o próximo.</h2><p>Desenvolvemos produtos, sistemas e experiências digitais com foco em desempenho, organização e evolução contínua.</p></div>
+  <div><h2>Precisão para construir o próximo.</h2><p>Desenvolvemos produtos, sistemas e experiências digitais com foco em desempenho, organização e evolução contínua.</p><a class="text-link" href="sobre-nos.html">Conheça a Korczak Technologies <span>↗</span></a></div>
 </section>
+
 <section id="servicos" class="section">
   <p class="tag">02 / SERVIÇOS</p>
   <div class="cards">
@@ -36,10 +48,12 @@
     <article><small>04</small><h3>Soluções digitais</h3><p>Da ideia ao produto, com estratégia e execução.</p></article>
   </div>
 </section>
+
 <section class="statement"><p class="tag">03 / VISÃO</p><blockquote>Construir o que é necessário.<br><em>Melhorar o que já existe.</em><br>Criar o que ainda não existe.</blockquote></section>
-<section id="contato" class="contact"><p class="tag">04 / CONTATO</p><h2>Vamos construir<br>algo relevante.</h2><a href="mailto:contato@korczak.tech">contato@korczak.tech <span>↗</span></a></section>
+
+<section id="contato" class="contact"><p class="tag">06 / CONTATO</p><h2>Vamos construir<br>algo relevante.</h2><a href="mailto:contato@korczak.tech">contato@korczak.tech <span>↗</span></a></section>
 </main>
-<footer><span><b>KZ.</b> Korczak Technologies</span><span>© <span id="year"></span></span></footer>
+<footer><span><b>KZ.</b> Korczak Technologies</span><span>© <span class="footer-year"></span></span></footer>
 <script src="script.js"></script>
 </body>
 </html>
