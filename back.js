@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const { get } = require('express/lib/response');
 
 // ===================== CONFIGURAÇÕES =====================
 const app = express();
@@ -22,7 +23,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ===================== CONEXÃO COM MONGODB =====================
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://Korczak:Exceto1%7C@korczakcluster.hkaipeg.mongodb.net/';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
