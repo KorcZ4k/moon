@@ -1,10 +1,691 @@
 <!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <title>Korczak Tech</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Korczak Technologies · Institucional</title>
+  <!-- Font Awesome (ícones) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background-color: #f4f7fc;
+      color: #0b1a2e;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* cabeçalho */
+    header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.02);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(0, 20, 50, 0.06);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background: #0b2b4a;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      box-shadow: 0 8px 18px -6px rgba(11, 43, 74, 0.25);
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: #0b1a2e;
+    }
+
+    .logo-text span {
+      color: #256a9e;
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #1e2f44;
+      transition: color 0.2s;
+      font-size: 1rem;
+    }
+
+    .nav-links a:hover {
+      color: #256a9e;
+    }
+
+    .btn-outline {
+      border: 1.5px solid #256a9e;
+      background: transparent;
+      padding: 0.5rem 1.6rem;
+      border-radius: 40px;
+      color: #256a9e;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .btn-outline:hover {
+      background: #256a9e;
+      color: white;
+      border-color: #256a9e;
+    }
+
+    /* hero */
+    .hero {
+      padding: 4rem 0 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2.5rem;
+    }
+
+    .hero-content {
+      flex: 1 1 380px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #0b1a2e;
+    }
+
+    .hero-content h1 i {
+      color: #256a9e;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #2a405c;
+      margin: 1.5rem 0 2rem;
+      max-width: 500px;
+    }
+
+    .hero-image {
+      flex: 1 1 380px;
+      background: linear-gradient(145deg, #e6eef9, #d4e1f0);
+      border-radius: 40px;
+      padding: 2rem 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 20px 40px -12px rgba(0, 30, 60, 0.15);
+    }
+
+    .hero-image i {
+      font-size: 6rem;
+      color: #0b2b4a;
+      opacity: 0.9;
+    }
+
+    .hero-image p {
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #1a3855;
+    }
+
+    .btn-primario {
+      background: #0b2b4a;
+      border: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 8px 20px -6px rgba(11, 43, 74, 0.3);
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .btn-primario:hover {
+      background: #1a3f62;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px -8px rgba(11, 43, 74, 0.35);
+    }
+
+    /* seção serviços */
+    .servicos {
+      padding: 4rem 0;
+    }
+
+    .servicos h2 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .servicos-desc {
+      text-align: center;
+      color: #2a405c;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      font-size: 1.1rem;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem 1.8rem;
+      border-radius: 32px;
+      flex: 1 1 240px;
+      max-width: 280px;
+      box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.06);
+      transition: all 0.2s;
+      border: 1px solid rgba(0, 0, 0, 0.02);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px -16px rgba(11, 43, 74, 0.12);
+      border-color: #d4e1f0;
+    }
+
+    .card i {
+      font-size: 2.6rem;
+      color: #256a9e;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: #3a4f6b;
+      font-size: 0.95rem;
+    }
+
+    /* seção orçamento (landing) */
+    .orcamento {
+      background: #ffffff;
+      padding: 4rem 0;
+      border-radius: 60px 60px 0 0;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.02);
+      margin-top: 2rem;
+    }
+
+    .orcamento-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: flex-start;
+    }
+
+    .orcamento-info {
+      flex: 1 1 300px;
+    }
+
+    .orcamento-info h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .orcamento-info p {
+      color: #2a405c;
+      margin-bottom: 1.5rem;
+    }
+
+    .orcamento-info i {
+      color: #256a9e;
+      margin-right: 0.4rem;
+    }
+
+    .form-orcamento {
+      flex: 2 1 400px;
+      background: #f8fafc;
+      padding: 2.5rem;
+      border-radius: 40px;
+      box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.04);
+      border: 1px solid #eaf0f6;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      color: #0b1a2e;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid #dce5ef;
+      border-radius: 30px;
+      font-size: 1rem;
+      background: white;
+      transition: 0.15s;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #256a9e;
+      box-shadow: 0 0 0 4px rgba(37, 106, 158, 0.08);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+      border-radius: 24px;
+    }
+
+    .btn-enviar {
+      background: #0b2b4a;
+      border: none;
+      padding: 1rem 2.8rem;
+      border-radius: 60px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: 0.2s;
+      width: 100%;
+      box-shadow: 0 8px 20px -6px rgba(11, 43, 74, 0.25);
+    }
+
+    .btn-enviar:hover {
+      background: #1a3f62;
+      transform: scale(1.01);
+    }
+
+    /* rodapé */
+    footer {
+      background: #0b1a2e;
+      color: #cbdae9;
+      padding: 2.5rem 0 2rem;
+      margin-top: 0;
+      border-radius: 40px 40px 0 0;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .footer-col h4 {
+      color: white;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-col p {
+      font-size: 0.95rem;
+      max-width: 260px;
+    }
+
+    .footer-social i {
+      font-size: 1.6rem;
+      margin-right: 1rem;
+      color: #b0c8dd;
+      transition: 0.2s;
+    }
+
+    .footer-social i:hover {
+      color: white;
+    }
+
+    .footer-copy {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 1.8rem;
+      color: #8aa2bc;
+    }
+
+    /* responsividade */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 1rem 0;
+        gap: 0.8rem;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .hero-content h1 {
+        font-size: 2.4rem;
+      }
+      .form-orcamento {
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Olá, teste</h1>
+
+  <header>
+    <div class="container navbar">
+      <div class="logo-area">
+        <div class="logo-icon">K</div>
+        <div class="logo-text">Korczak <span>Tech</span></div>
+      </div>
+      <div class="nav-links">
+        <a href="#servicos">Serviços</a>
+        <a href="#orcamento">Orçamento</a>
+        <a href="#contato">Contato</a>
+        <button class="btn-outline" onclick="document.getElementById('orcamento').scrollIntoView({behavior:'smooth'})">
+          <i class="fas fa-paper-plane" style="margin-right:6px;"></i> Solicitar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="container hero" id="inicio">
+      <div class="hero-content">
+        <h1>Tecnologia com <i>propósito</i> social</h1>
+        <p>
+          A Korczak Technologies une desenvolvimento de software e impacto social.
+          Soluções inovadoras para organizações, instituições e negócios que querem transformar.
+        </p>
+        <a href="#orcamento" class="btn-primario"><i class="fas fa-file-signature" style="margin-right:10px;"></i> Solicitar orçamento</a>
+      </div>
+      <div class="hero-image">
+        <i class="fas fa-hand-holding-heart"></i>
+        <p><i class="fas fa-check-circle" style="color:#256a9e;"></i> Pré-operacional · em construção</p>
+        <p style="font-size:0.9rem; opacity:0.7; margin-top:0.2rem;">CNPJ em processo — já atendemos</p>
+      </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="container servicos" id="servicos">
+      <h2>Nossos serviços</h2>
+      <p class="servicos-desc">
+        Da arquitetura de software à consultoria social, criamos pontes entre tecnologia e pessoas.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <i class="fas fa-code"></i>
+          <h3>Desenvolvimento web</h3>
+          <p>Sites, aplicativos e sistemas personalizados com foco em performance e acessibilidade.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-database"></i>
+          <h3>Banco de dados & API</h3>
+          <p>Modelagem, integração e segurança com MongoDB, SQL e RESTful APIs.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-users"></i>
+          <h3>Serviços sociais</h3>
+          <p>Consultoria para ONGs, projetos comunitários e iniciativas de inclusão digital.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-chart-line"></i>
+          <h3>Landing pages</h3>
+          <p>Páginas de conversão otimizadas para captar leads e apresentar sua ideia.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORÇAMENTO (LANDING) -->
+    <section class="orcamento" id="orcamento">
+      <div class="container orcamento-grid">
+        <div class="orcamento-info">
+          <h2><i class="fas fa-calculator" style="color:#256a9e;"></i> Solicite um orçamento</h2>
+          <p>
+            Preencha o formulário e receba uma proposta personalizada para o seu projeto.
+            Atendemos desde startups a organizações sociais.
+          </p>
+          <p><i class="fas fa-check-circle"></i> Resposta em até 24h</p>
+          <p><i class="fas fa-check-circle"></i> Sem compromisso</p>
+          <p style="margin-top:1.2rem;"><i class="fas fa-envelope"></i> contato@korczaktech.com</p>
+        </div>
+
+        <form class="form-orcamento" id="formOrcamento">
+          <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" placeholder="Seu nome" required />
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="seu@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone / WhatsApp</label>
+            <input type="tel" id="telefone" placeholder="(11) 99999-9999" />
+          </div>
+          <div class="form-group">
+            <label for="servico">Serviço de interesse</label>
+            <select id="servico">
+              <option value="desenvolvimento-web">Desenvolvimento web</option>
+              <option value="banco-dados-api">Banco de dados / API</option>
+              <option value="servicos-sociais">Serviços sociais</option>
+              <option value="landing-page">Landing page</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mensagem">Mensagem ou escopo inicial</label>
+            <textarea id="mensagem" placeholder="Conte-nos sobre sua ideia, prazo ou necessidades..."></textarea>
+          </div>
+          <button type="submit" class="btn-enviar" id="btnEnviar">
+            <i class="fas fa-paper-plane" style="margin-right:8px;"></i> Enviar orçamento
+          </button>
+          <p style="font-size:0.8rem; color:#5b6f88; margin-top:1rem; text-align:center;">
+            <i class="fas fa-lock"></i> Seus dados estão seguros.
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer id="contato">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h4>Korczak Technologies</h4>
+          <p>Inovação e responsabilidade social. Pré-operacional — construindo o futuro.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <p><i class="fas fa-envelope" style="margin-right:8px;"></i> contato@korczaktech.com</p>
+          <p><i class="fas fa-phone-alt"></i> +55 (11) 99999-9999</p>
+        </div>
+        <div class="footer-col footer-social">
+          <h4>Redes</h4>
+          <i class="fab fa-linkedin"></i>
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-github"></i>
+          <i class="fab fa-youtube"></i>
+        </div>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 Korczak Technologies · todos os direitos reservados ·
+        <span style="opacity:0.5;">CNPJ em processo</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- app.js (simulação de integração com MongoDB/backend) -->
+  <script>
+    (function() {
+      "use strict";
+
+      // Esse script simula o envio dos dados para um backend (futuramente MongoDB)
+      // Ele intercepta o submit do formulário, valida e exibe uma mensagem de sucesso.
+
+      const form = document.getElementById('formOrcamento');
+      const btnEnviar = document.getElementById('btnEnviar');
+
+      // elementos do formulário
+      const nome = document.getElementById('nome');
+      const email = document.getElementById('email');
+      const telefone = document.getElementById('telefone');
+      const servico = document.getElementById('servico');
+      const mensagem = document.getElementById('mensagem');
+
+      // função para exibir feedback (simulando envio)
+      function mostrarFeedback(ok, texto) {
+        // remove feedback anterior se houver
+        const antigo = document.querySelector('.feedback-orcamento');
+        if (antigo) antigo.remove();
+
+        const div = document.createElement('div');
+        div.className = 'feedback-orcamento';
+        div.style.marginTop = '1.2rem';
+        div.style.padding = '0.8rem 1.2rem';
+        div.style.borderRadius = '30px';
+        div.style.fontWeight = '500';
+        div.style.textAlign = 'center';
+
+        if (ok) {
+          div.style.background = '#e0f2e6';
+          div.style.color = '#0b4d2a';
+          div.innerHTML = `<i class="fas fa-check-circle"></i> ${texto}`;
+        } else {
+          div.style.background = '#fee9e7';
+          div.style.color = '#8f2a1f';
+          div.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${texto}`;
+        }
+
+        form.appendChild(div);
+        // rola para o feedback
+        div.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // função que simula o envio para o backend (MongoDB via Node.js)
+      function enviarDados(dados) {
+        // Aqui você substituiria por um fetch para sua API real:
+        // return fetch('https://sua-api.com/orcamento', { method: 'POST', body: JSON.stringify(dados), headers: ... })
+
+        return new Promise((resolve, reject) => {
+          // Simula latência de rede
+          setTimeout(() => {
+            // Validação extra: se o nome ou email estiverem vazios, rejeita
+            if (!dados.nome || dados.nome.length < 2) {
+              reject(new Error('Preencha o nome corretamente.'));
+              return;
+            }
+            if (!dados.email || !dados.email.includes('@')) {
+              reject(new Error('Informe um e-mail válido.'));
+              return;
+            }
+            // sucesso
+            resolve({
+              sucesso: true,
+              mensagem: 'Orçamento enviado com sucesso! Em breve retornamos.',
+              dados: dados
+            });
+          }, 800);
+        });
+      }
+
+      // handler do submit
+      form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // desabilita botão para evitar múltiplos envios
+        btnEnviar.disabled = true;
+        btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        // coleta dados
+        const dados = {
+          nome: nome.value.trim(),
+          email: email.value.trim(),
+          telefone: telefone.value.trim(),
+          servico: servico.value,
+          mensagem: mensagem.value.trim(),
+          data: new Date().toISOString(),
+          // Simula um identificador único (para MongoDB)
+          _id: 'KOR-' + Date.now().toString(36).toUpperCase()
+        };
+
+        try {
+          const resposta = await enviarDados(dados);
+          // sucesso
+          mostrarFeedback(true, resposta.mensagem + ' (ID: ' + dados._id + ')');
+          form.reset(); // limpa campos
+        } catch (erro) {
+          mostrarFeedback(false, erro.message || 'Ocorreu um erro. Tente novamente.');
+        } finally {
+          btnEnviar.disabled = false;
+          btnEnviar.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:8px;"></i> Enviar orçamento';
+        }
+      });
+
+      // Simula carregamento de dados ou inicialização
+      console.log('Korczak Technologies · app.js carregado.');
+      console.log('Integração com MongoDB disponível via backend Node.js.');
+
+      // Exemplo de estrutura para uso futuro com MongoDB (conexão)
+      // const { MongoClient } = require('mongodb');
+      // const uri = 'mongodb+srv://usuario:senha@cluster...';
+      // const client = new MongoClient(uri);
+      // await client.connect();
+      // const db = client.db('korczak');
+      // const orcamentos = db.collection('orcamentos');
+      // await orcamentos.insertOne(dados);
+
+    })();
+  </script>
 </body>
-<footer>
-  
-</footer>
+</html>
