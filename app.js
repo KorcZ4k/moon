@@ -1,79 +1,88 @@
-// app.js - Frontend
+// app.js - Frontend (navegador)
+// Korczak Technologies - Versão com logs detalhados
 
-async function enviarOrcamento(dados) {
-    try {
-        const response = await fetch(`${API_URL}/orcamentos`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(dados)
-        });
+(function() {
+    "use strict";
 
-        const resposta = await response.json();
+    console.log('🚀 Korczak Technologies - app.js carregado!');
 
-        if (!response.ok) {
-            throw new Error(resposta.erro || 'Erro ao enviar orçamento');
-        }
+    // ===================== CONFIGURAÇÃO =====================
+    // DETECÇÃO AUTOMÁTICA DE AMBIENTE
+    const API_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:3000/api'  // Desenvolvimento local
+        : 'https://korczak-backend.onrender.com/api';  // Produção (Render)
 
-        // Se tiver link do WhatsApp, abre automaticamente
-        if (resposta.linkWhatsApp) {
-            // Abre o WhatsApp em uma nova janela
-            window.open(resposta.linkWhatsApp, '_blank');
-            
-            // Mostra mensagem de sucesso
-            mostrarFeedback('sucesso', 
-                `✅ ${resposta.mensagem} Abrimos o WhatsApp para você!`
-            );
-        } else {
-            mostrarFeedback('sucesso', `✅ ${resposta.mensagem}`);
-        }
+    console.log(`📡 API URL: ${API_URL}`);
 
-        return resposta;
+    // ===================== ELEMENTOS DO DOM =====================
+    const form = document.getElementById('formOrcamento');
+    const btnEnviar = document.getElementById('btnEnviar');
 
-    } catch (error) {
-        console.error('Erro na requisição:', error);
-        throw error;
-    }
-}        }
+    const campoNome = document.getElementById('nome');
+    const campoEmail = document.getElementById('email');
+    const campoTelefone = document.getElementById('telefone');
+    const campoServico = document.getElementById('servico');
+    const campoMensagem = document.getElementById('mensagem');
 
-        // Cria novo elemento de feedback
-        feedbackElement = document.createElement('div');
-        feedbackElement.className = 'feedback-orcamento';
-        feedbackElement.style.marginTop = '1.2rem';
-        feedbackElement.style.padding = '0.8rem 1.2rem';
-        feedbackElement.style.borderRadius = '30px';
-        feedbackElement.style.fontWeight = '500';
-        feedbackElement.style.textAlign = 'center';
-        feedbackElement.style.animation = 'fadeIn 0.3s ease';
+    console.log('📋 Elementos do formulário:', {
+        form: !!form,
+        nome: !!campoNome,
+        email: !!campoEmail,
+        telefone: !!campoTelefone,
+        servico: !!campoServico,
+        mensagem: !!campoMensagem,
+        btnEnviar: !!btnEnviar
+    });
+
+    // ===================== FUNÇÕES AUXILIARES =====================
+
+    /**
+     * Mostra feedback visual para o usuário
+     */
+    function mostrarFeedback(tipo, mensagem) {
+        console.log(`💬 Feedback: [${tipo}] ${mensagem}`);
+        
+        // Remove feedback anterior
+        const antigo = document.querySelector('.feedback-orcamento');
+        if (antigo) antigo.remove();
+
+        // Cria novo feedback
+        const div = document.createElement('div');
+        div.className = 'feedback-orcamento';
+        div.style.marginTop = '1.2rem';
+        div.style.padding = '0.8rem 1.2rem';
+        div.style.borderRadius = '30px';
+        div.style.fontWeight = '500';
+        div.style.textAlign = 'center';
+        div.style.animation = 'fadeIn 0.3s ease';
 
         if (tipo === 'sucesso') {
-            feedbackElement.style.background = '#e0f2e6';
-            feedbackElement.style.color = '#0b4d2a';
-            feedbackElement.style.border = '1px solid #a8d5ba';
-            feedbackElement.innerHTML = `<i class="fas fa-check-circle"></i> ${mensagem}`;
+            div.style.background = '#e0f2e6';
+            div.style.color = '#0b4d2a';
+            div.style.border = '1px solid #a8d5ba';
+            div.innerHTML = `<i class="fas fa-check-circle" style="margin-right:8px;"></i> ${mensagem}`;
         } else if (tipo === 'erro') {
-            feedbackElement.style.background = '#fee9e7';
-            feedbackElement.style.color = '#8f2a1f';
-            feedbackElement.style.border = '1px solid #f5c6c2';
-            feedbackElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${mensagem}`;
+            div.style.background = '#fee9e7';
+            div.style.color = '#8f2a1f';
+            div.style.border = '1px solid #f5c6c2';
+            div.innerHTML = `<i class="fas fa-exclamation-circle" style="margin-right:8px;"></i> ${mensagem}`;
         } else if (tipo === 'carregando') {
-            feedbackElement.style.background = '#e8f0fe';
-            feedbackElement.style.color = '#1a3f62';
-            feedbackElement.style.border = '1px solid #b8d0e8';
-            feedbackElement.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${mensagem}`;
+            div.style.background = '#e8f0fe';
+            div.style.color = '#1a3f62';
+            div.style.border = '1px solid #b8d0e8';
+            div.innerHTML = `<i class="fas fa-spinner fa-spin" style="margin-right:8px;"></i> ${mensagem}`;
         }
 
-        // Adiciona ao formulário
-        form.appendChild(feedbackElement);
-        
-        // Rola para o feedback
-        feedbackElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        form.appendChild(div);
+        div.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    // Função para validar campos
+    /**
+     * Valida os campos do formulário
+     */
     function validarFormulario() {
+        console.log('🔍 Validando formulário...');
+        
         const nome = campoNome.value.trim();
         const email = campoEmail.value.trim();
         const telefone = campoTelefone.value.trim();
@@ -99,24 +108,30 @@ async function enviarOrcamento(dados) {
             return false;
         }
 
+        console.log('✅ Formulário válido!');
         return true;
     }
 
-    // Função para limpar o formulário
+    /**
+     * Limpa o formulário após envio
+     */
     function limparFormulario() {
         form.reset();
-        // Remove feedback
-        if (feedbackElement) {
-            feedbackElement.remove();
-            feedbackElement = null;
-        }
+        const feedback = document.querySelector('.feedback-orcamento');
+        if (feedback) feedback.remove();
     }
 
-    // ===================== FUNÇÃO DE ENVIO PARA O BACKEND =====================
+    // ===================== FUNÇÃO DE ENVIO =====================
 
+    /**
+     * Envia os dados para o backend
+     */
     async function enviarOrcamento(dados) {
+        console.log('🚀 1. FUNÇÃO enviarOrcamento INICIADA');
+        console.log('📤 2. URL:', `${API_URL}/orcamentos`);
+        console.log('📦 3. Dados:', dados);
+
         try {
-            // Faz a requisição para o backend
             const response = await fetch(`${API_URL}/orcamentos`, {
                 method: 'POST',
                 headers: {
@@ -126,17 +141,23 @@ async function enviarOrcamento(dados) {
                 body: JSON.stringify(dados)
             });
 
+            console.log('📥 4. STATUS DA RESPOSTA:', response.status);
+            console.log('📥 5. RESPONSE OK?', response.ok);
+            console.log('📥 6. HEADERS:', response.headers);
+
             // Tenta parsear a resposta como JSON
             let respostaJson;
             try {
                 respostaJson = await response.json();
             } catch (e) {
+                console.error('❌ Erro ao parsear JSON:', e);
                 throw new Error('Resposta inválida do servidor');
             }
 
+            console.log('📥 7. RESPOSTA JSON:', respostaJson);
+
             // Verifica se a requisição foi bem sucedida
             if (!response.ok) {
-                // Extrai mensagem de erro da resposta
                 const mensagemErro = respostaJson.erro || respostaJson.mensagem || 'Erro ao enviar orçamento';
                 throw new Error(mensagemErro);
             }
@@ -144,24 +165,34 @@ async function enviarOrcamento(dados) {
             return respostaJson;
 
         } catch (error) {
-            console.error('Erro na requisição:', error);
+            console.error('❌ 8. ERRO NA REQUISIÇÃO:', error);
             throw error;
         }
     }
 
     // ===================== HANDLER DO FORMULÁRIO =====================
 
+    // Verifica se o formulário existe antes de adicionar o evento
+    if (!form) {
+        console.error('❌ Formulário com ID "formOrcamento" não encontrado!');
+        return;
+    }
+
     form.addEventListener('submit', async function(event) {
+        console.log('📝 FORMULÁRIO SUBMETIDO!');
         event.preventDefault();
 
-        // Valida o formulário antes de enviar
+        // Valida o formulário
+        console.log('🔍 Validando...');
         if (!validarFormulario()) {
+            console.log('❌ Validação falhou');
             return;
         }
+        console.log('✅ Validação passou!');
 
         // Desabilita o botão e mostra estado de carregamento
         btnEnviar.disabled = true;
-        btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:8px;"></i> Enviando...';
         mostrarFeedback('carregando', 'Enviando seu orçamento...');
 
         // Coleta os dados do formulário
@@ -173,24 +204,33 @@ async function enviarOrcamento(dados) {
             mensagem: campoMensagem.value.trim()
         };
 
+        console.log('📦 Dados coletados:', dados);
+
         try {
             // Envia para o backend
             const resposta = await enviarOrcamento(dados);
+            console.log('✅ Sucesso!', resposta);
             
             // Sucesso!
-            mostrarFeedback('sucesso', 
-                `✅ ${resposta.mensagem || 'Orçamento enviado com sucesso!'} `
-                + `ID: ${resposta.dados?.id || 'N/A'}`
-            );
+            const mensagemSucesso = resposta.mensagem || 'Orçamento enviado com sucesso!';
+            const id = resposta.dados?.id || 'N/A';
+            mostrarFeedback('sucesso', `✅ ${mensagemSucesso} (ID: ${id})`);
             
-            // Limpa o formulário após envio bem sucedido
+            // Se tiver link do WhatsApp, abre automaticamente
+            if (resposta.linkWhatsApp) {
+                console.log('💬 Abrindo WhatsApp...');
+                setTimeout(() => {
+                    window.open(resposta.linkWhatsApp, '_blank');
+                }, 1500);
+            }
+
+            // Limpa o formulário
             limparFormulario();
 
         } catch (error) {
             // Erro ao enviar
-            mostrarFeedback('erro', 
-                `❌ ${error.message || 'Erro ao enviar orçamento. Tente novamente.'}`
-            );
+            console.error('❌ Erro final:', error);
+            mostrarFeedback('erro', `❌ ${error.message || 'Erro ao enviar orçamento. Tente novamente.'}`);
         } finally {
             // Reabilita o botão
             btnEnviar.disabled = false;
@@ -198,30 +238,30 @@ async function enviarOrcamento(dados) {
         }
     });
 
-    // ===================== MASCARAS PARA TELEFONE =====================
+    // ===================== MÁSCARA PARA TELEFONE =====================
 
-    // Máscara para telefone (formato (XX) XXXXX-XXXX)
-    campoTelefone.addEventListener('input', function(e) {
-        let valor = this.value.replace(/\D/g, '');
-        if (valor.length > 11) valor = valor.slice(0, 11);
-        
-        if (valor.length > 0) {
-            if (valor.length <= 2) {
-                valor = `(${valor}`;
-            } else if (valor.length <= 6) {
-                valor = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
-            } else if (valor.length <= 10) {
-                valor = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}-${valor.slice(6)}`;
-            } else {
-                valor = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7, 11)}`;
+    if (campoTelefone) {
+        campoTelefone.addEventListener('input', function(e) {
+            let valor = this.value.replace(/\D/g, '');
+            if (valor.length > 11) valor = valor.slice(0, 11);
+            
+            if (valor.length > 0) {
+                if (valor.length <= 2) {
+                    valor = `(${valor}`;
+                } else if (valor.length <= 6) {
+                    valor = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
+                } else if (valor.length <= 10) {
+                    valor = `(${valor.slice(0, 2)}) ${valor.slice(2, 6)}-${valor.slice(6)}`;
+                } else {
+                    valor = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7, 11)}`;
+                }
             }
-        }
-        this.value = valor;
-    });
+            this.value = valor;
+        });
+    }
 
-    // ===================== ANIMAÇÃO AO ROLAR A PÁGINA =====================
+    // ===================== ANIMAÇÃO SUAVE PARA LINKS =====================
 
-    // Animação suave para links de navegação
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -238,72 +278,30 @@ async function enviarOrcamento(dados) {
         });
     });
 
-    // ===================== INICIALIZAÇÃO =====================
+    // ===================== VERIFICA CONECTIVIDADE COM BACKEND =====================
 
-    console.log('🚀 Korczak Technologies - Frontend carregado!');
-    console.log(`📡 API URL: ${API_URL}`);
-    console.log('📝 Formulário pronto para uso.');
-
-    // Verifica conectividade com o backend
     async function verificarBackend() {
+        console.log('🔍 Verificando conectividade com o backend...');
         try {
             const response = await fetch(`${API_URL}/saude`);
-            if (response.ok) {
-                const dados = await response.json();
-                console.log('✅ Backend conectado:', dados);
-            } else {
-                console.warn('⚠️ Backend não respondeu corretamente');
-            }
-        } catch (error) {
-            console.warn('⚠️ Não foi possível conectar ao backend:', error.message);
-            // Mostra aviso discreto para o usuário
-            const aviso = document.createElement('div');
-            aviso.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: #fff3cd;
-                color: #856404;
-                padding: 12px 20px;
-                border-radius: 12px;
-                border: 1px solid #ffc107;
-                font-size: 0.9rem;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                z-index: 1000;
-                max-width: 300px;
-            `;
-            aviso.innerHTML = `
-                <i class="fas fa-exclamation-triangle"></i> 
-                Modo offline: orçamentos serão salvos localmente.
-                <button onclick="this.parentElement.remove()" style="margin-left:10px;background:none;border:none;font-weight:bold;cursor:pointer;">✕</button>
-            `;
-            document.body.appendChild(aviso);
             
-            // Modo offline - salva no localStorage
-            form.addEventListener('submit', function(e) {
-                if (!navigator.onLine) {
-                    e.preventDefault();
-                    const dados = {
-                        nome: campoNome.value.trim(),
-                        email: campoEmail.value.trim(),
-                        telefone: campoTelefone.value.trim(),
-                        servico: campoServico.value,
-                        mensagem: campoMensagem.value.trim(),
-                        data: new Date().toISOString(),
-                        offline: true
-                    };
-                    
-                    // Salva no localStorage
-                    const orcamentosOffline = JSON.parse(localStorage.getItem('orcamentosOffline') || '[]');
-                    orcamentosOffline.push(dados);
-                    localStorage.setItem('orcamentosOffline', JSON.stringify(orcamentosOffline));
-                    
-                    mostrarFeedback('sucesso', '✅ Orçamento salvo offline! Será enviado quando a conexão for restabelecida.');
-                    limparFormulario();
-                    btnEnviar.disabled = false;
-                    btnEnviar.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:8px;"></i> Enviar orçamento';
-                }
-            });
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const dados = await response.json();
+            console.log('✅ Backend conectado:', dados);
+            
+            // Verifica se o MongoDB está conectado
+            if (dados.mongo && dados.mongo.conectado) {
+                console.log('✅ MongoDB: CONECTADO');
+            } else {
+                console.warn('⚠️ MongoDB: DESCONECTADO');
+            }
+            
+        } catch (error) {
+            console.error('❌ Backend OFFLINE:', error.message);
+            mostrarFeedback('erro', '⚠️ Servidor offline. Tente novamente mais tarde.');
         }
     }
 
@@ -329,7 +327,12 @@ async function enviarOrcamento(dados) {
         validarFormulario,
         mostrarFeedback,
         limparFormulario,
-        API_URL
+        API_URL,
+        verificarBackend
     };
+
+    console.log('✅ app.js totalmente carregado!');
+    console.log('🛠️ Para debug, use: window.Korczak');
+    console.log('📝 Exemplo: Korczak.verificarBackend()');
 
 })();
