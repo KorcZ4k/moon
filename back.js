@@ -23,7 +23,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ===================== CONEXÃO COM MONGODB =====================
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://Korczak:Exceto1%7C@korczakcluster.hkaipeg.mongodb.net/';
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
