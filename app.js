@@ -1,40 +1,42 @@
-// app.js - Frontend (navegador)
-// Responsável pela interação com o usuário e comunicação com a API
+// app.js - Frontend
 
-(function() {
-    "use strict";
+async function enviarOrcamento(dados) {
+    try {
+        const response = await fetch(`${API_URL}/orcamentos`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
 
-    // ===================== CONFIGURAÇÕES =====================
-    // URL da API backend (ajuste conforme seu ambiente)
-    // Para desenvolvimento local: 'http://localhost:3000/api'
-    // Para produção: 'https://seu-backend.herokuapp.com/api'
-    const API_URL = window.location.hostname === 'localhost' 
-        ? 'http://localhost:3000/api' 
-        : 'https://korczak-backend.herokuapp.com/api';
+        const resposta = await response.json();
 
-    // ===================== ELEMENTOS DO DOM =====================
-    const form = document.getElementById('formOrcamento');
-    const btnEnviar = document.getElementById('btnEnviar');
-    
-    // Campos do formulário
-    const campoNome = document.getElementById('nome');
-    const campoEmail = document.getElementById('email');
-    const campoTelefone = document.getElementById('telefone');
-    const campoServico = document.getElementById('servico');
-    const campoMensagem = document.getElementById('mensagem');
-
-    // Elementos para feedback
-    let feedbackElement = null;
-
-    // ===================== FUNÇÕES AUXILIARES =====================
-
-    // Função para mostrar mensagens de feedback
-    function mostrarFeedback(tipo, mensagem) {
-        // Remove feedback anterior se existir
-        if (feedbackElement) {
-            feedbackElement.remove();
-            feedbackElement = null;
+        if (!response.ok) {
+            throw new Error(resposta.erro || 'Erro ao enviar orçamento');
         }
+
+        // Se tiver link do WhatsApp, abre automaticamente
+        if (resposta.linkWhatsApp) {
+            // Abre o WhatsApp em uma nova janela
+            window.open(resposta.linkWhatsApp, '_blank');
+            
+            // Mostra mensagem de sucesso
+            mostrarFeedback('sucesso', 
+                `✅ ${resposta.mensagem} Abrimos o WhatsApp para você!`
+            );
+        } else {
+            mostrarFeedback('sucesso', `✅ ${resposta.mensagem}`);
+        }
+
+        return resposta;
+
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+        throw error;
+    }
+}        }
 
         // Cria novo elemento de feedback
         feedbackElement = document.createElement('div');
