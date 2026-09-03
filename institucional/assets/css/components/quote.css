@@ -1,0 +1,1 @@
+.institutional-quote{padding:clamp(70px,10vw,150px) var(--page-padding);border-top:1px solid var(--line);text-align:center}.institutional-quote blockquote{max-width:950px;margin:0 auto;font-size:clamp(2rem,5vw,5rem);line-height:1.05}.quote-signature{display:block;margin-top:28px;font-family:var(--font-mono);font-size:.75rem;color:var(--gray)}
