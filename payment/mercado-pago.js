@@ -1,6 +1,9 @@
 const crypto=require('crypto');
 
-function paymentMode(){return String(process.env.MERCADO_PAGO_MODE||'production').toLowerCase()==='sandbox'?'sandbox':'production';}
+function paymentMode(){
+ const configured=String(process.env.MERCADO_PAGO_MODE||'sandbox').trim().toLowerCase();
+ return configured==='production'?'production':'sandbox';
+}
 function createMercadoPagoClient(){
  const accessToken=process.env.MERCADO_PAGO_ACCESS_TOKEN;
  if(!accessToken){const error=new Error('MERCADO_PAGO_ACCESS_TOKEN não configurado.');error.code='MP_NOT_CONFIGURED';throw error;}
@@ -25,7 +28,6 @@ function verifyWebhookSignature({requestId,dataId,signature}){
  if(!parts.ts||!parts.v1)return false;
  const rawTimestamp=Number(parts.ts);
  if(!Number.isFinite(rawTimestamp))return false;
- // O Mercado Pago pode enviar ts em segundos ou milissegundos; normalizamos para ms.
  const timestampMs=rawTimestamp>1e11?rawTimestamp:rawTimestamp*1000;
  if(Math.abs(Date.now()-timestampMs)>10*60*1000)return false;
  const manifest=`id:${String(dataId||'').toLowerCase()};request-id:${requestId||''};ts:${parts.ts};`;
