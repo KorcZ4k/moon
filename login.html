@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Área de acesso da Korczak Technologies.">
+<title>Entrar | Korczak Technologies</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="inner-page auth-page">
+<button class="menu" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false"><span class="menu-lines"><i></i><i></i><i></i></span></button>
+<div class="menu-overlay" aria-hidden="true"></div>
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="side-logo"><img src="assets/logo-korczak.png" alt="Korczak Technologies" class="side-logo-image"></a>
+  <nav class="side-nav">
+    <a href="index.html#sobre"><span>01</span> Sobre</a><a href="index.html#servicos"><span>02</span> Serviços</a><a href="franquias.html"><span>03</span> Franquias</a><a href="sobre-nos.html"><span>04</span> Sobre nós</a><a href="orcamento.html" class="budget-link"><span>05</span> Faça seu orçamento</a><a href="index.html#contato"><span>06</span> Contato</a>
+  </nav><div class="side-bottom">Korczak Technologies</div>
+</aside>
+<main class="auth-main">
+<section class="auth-shell">
+  <div class="auth-intro"><img src="assets/logo-korczak.png" alt="Korczak Technologies" class="auth-logo"><p class="tag">ÁREA DO CLIENTE</p><h1>Acesse sua<br><span>conta.</span></h1><p class="lead">Entre com seu e-mail ou ID pessoal de 9 dígitos. Caso ainda não possua uma conta, crie seu cadastro.</p></div>
+  <div class="auth-card">
+    <div class="auth-tabs"><button class="auth-tab active" type="button" data-auth-target="signin">Sign in</button><button class="auth-tab" type="button" data-auth-target="signup">Sign up</button></div>
+    <form id="signin-form" class="auth-form active" data-auth-form="signin">
+      <label>E-mail ou ID de 9 dígitos<input name="identificador" autocomplete="username" placeholder="email@exemplo.com ou 123456789" required></label>
+      <label>Senha<input type="password" name="senha" autocomplete="current-password" placeholder="Sua senha" minlength="8" required></label>
+      <button class="primary form-button" type="submit">Entrar</button>
+      <p class="form-message" hidden></p>
+    </form>
+    <form id="signup-form" class="auth-form" data-auth-form="signup">
+      <div class="auth-grid">
+        <label>Nome<input name="nome" autocomplete="given-name" required></label>
+        <label>Sobrenome<input name="sobrenome" autocomplete="family-name" required></label>
+        <label>ID de 9 dígitos<input name="userId" inputmode="numeric" pattern="\d{9}" maxlength="9" placeholder="123456789" required></label>
+        <label>Telefone<input name="telefone" type="tel" autocomplete="tel" required></label>
+        <label class="full">E-mail<input name="email" type="email" autocomplete="email" required></label>
+        <label class="full">ID do orçamento<input name="quoteId" inputmode="numeric" placeholder="Pendente ou 15 dígitos" maxlength="15"></label>
+        <label>Senha<input name="senha" type="password" autocomplete="new-password" minlength="8" required></label>
+        <label>Confirmar senha<input name="confirmarSenha" type="password" autocomplete="new-password" minlength="8" required></label>
+      </div>
+      <p class="auth-help">Caso ainda não possua um orçamento, deixe o campo vazio: o sistema registrará como <strong>Pendente</strong>.</p>
+      <button class="primary form-button" type="submit">Criar conta</button>
+      <p class="form-message" hidden></p>
+    </form>
+  </div>
+</section>
+</main>
+<footer><span><img src="assets/logo-korczak.png" alt="Korczak Technologies" class="footer-logo"> Korczak Technologies</span><span>© <span class="footer-year"></span></span></footer>
+<script src="app.js"></script>
+</body>
+</html>
