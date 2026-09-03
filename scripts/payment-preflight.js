@@ -1,0 +1,38 @@
+const https=require('https');
+const http=require('http');
+
+const base=String(process.env.BASE_URL||'https://kzsite.onrender.com').replace(/\/$/,'');
+const url=`${base}/health`;
+const client=url.startsWith('https://')?https:http;
+
+const req=client.get(url,{timeout:20000,headers:{accept:'application/json','user-agent':'Korczak-Payment-Preflight/1.0'}},res=>{
+  let body='';
+  res.setEncoding('utf8');
+  res.on('data',chunk=>body+=chunk);
+  res.on('end',()=>{
+    if(res.statusCode!==200){
+      console.error(`PRECHECK_FAILED HTTP ${res.statusCode}`);
+      process.exitCode=1;
+      return;
+    }
+    try{
+      const health=JSON.parse(body);
+      console.log('Health endpoint:',url);
+      console.log('Status:',health.status);
+      console.log('Database:',health.database);
+      console.log('Mercado Pago configured:',health.mercadoPagoConfigured);
+      const ok=health.status==='ok'&&health.database==='connected'&&health.mercadoPagoConfigured===true;
+      if(!ok){
+        console.error('PRECHECK_FAILED: o ambiente ainda não está pronto para iniciar os testes de pagamento.');
+        process.exitCode=1;
+        return;
+      }
+      console.log('PRECHECK_OK: ambiente pronto para o teste sandbox.');
+    }catch(error){
+      console.error('PRECHECK_FAILED: resposta inválida do /health.',error.message);
+      process.exitCode=1;
+    }
+  });
+});
+req.on('timeout',()=>req.destroy(new Error('Tempo limite excedido.')));
+req.on('error',error=>{console.error('PRECHECK_FAILED:',error.message);process.exitCode=1;});
