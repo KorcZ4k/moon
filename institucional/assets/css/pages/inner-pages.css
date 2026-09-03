@@ -1,0 +1,1 @@
+.page-hero{min-height:min(68vh,720px);display:flex;flex-direction:column;justify-content:center}.page-hero h1{max-width:900px}.page-hero .lead{max-width:720px}.section+.section{border-top:1px solid var(--border)}
