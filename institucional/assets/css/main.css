@@ -11,6 +11,7 @@
 @import url('./components/forms.css');
 @import url('./components/badges.css');
 @import url('./components/quote.css');
+@import url('./pages/home.css');
+@import url('./pages/inner-pages.css');
 @import url('./responsive/tablet.css');
 @import url('./responsive/mobile.css');
-@media(min-width:721px){#app-shell{display:grid;grid-template-columns:var(--sidebar-width) minmax(0,1fr)}.site-main{grid-column:2}}
