@@ -23,8 +23,11 @@ function verifyWebhookSignature({requestId,dataId,signature}){
  if(!secret||!signature)return false;
  const parts=Object.fromEntries(String(signature).split(',').map(part=>{const [key,...rest]=part.trim().split('=');return[key,rest.join('=')];}));
  if(!parts.ts||!parts.v1)return false;
- const timestamp=Number(parts.ts);
- if(!Number.isFinite(timestamp)||Math.abs(Date.now()-timestamp*1000)>10*60*1000)return false;
+ const rawTimestamp=Number(parts.ts);
+ if(!Number.isFinite(rawTimestamp))return false;
+ // O Mercado Pago pode enviar ts em segundos ou milissegundos; normalizamos para ms.
+ const timestampMs=rawTimestamp>1e11?rawTimestamp:rawTimestamp*1000;
+ if(Math.abs(Date.now()-timestampMs)>10*60*1000)return false;
  const manifest=`id:${String(dataId||'').toLowerCase()};request-id:${requestId||''};ts:${parts.ts};`;
  const expected=crypto.createHmac('sha256',secret).update(manifest).digest('hex');
  const received=String(parts.v1).toLowerCase();
