@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const button=document.querySelector('.mobile-menu-button');if(button){button.addEventListener('click',()=>{document.body.classList.toggle('menu-open');button.setAttribute('aria-expanded',document.body.classList.contains('menu-open')?'true':'false')})}});
