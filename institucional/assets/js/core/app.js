@@ -1,1 +1,1 @@
-document.documentElement.classList.remove('no-js');
+document.addEventListener('DOMContentLoaded',()=>{const header=document.querySelector('#site-header');if(header){header.innerHTML='<a class="brand" href="index.html"><span class="brand-mark">KZ</span><span class="brand-name">KORCZAK TECHNOLOGIES</span></a><button class="mobile-menu-button" type="button" aria-label="Abrir menu" aria-expanded="false">MENU</button>'}});
