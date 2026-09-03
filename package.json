@@ -5,8 +5,8 @@
   "description": "Site e API da Korczak Technologies",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node keepalive.js",
+    "dev": "node keepalive.js"
   },
   "engines": {
     "node": ">=20"
