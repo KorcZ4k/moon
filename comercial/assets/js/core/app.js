@@ -1,0 +1,1 @@
+export const API=location.origin;export function token(){return localStorage.getItem('kz_token')||''}export function authHeaders(){const t=token();return t?{Authorization:`Bearer ${t}`}:{} }
