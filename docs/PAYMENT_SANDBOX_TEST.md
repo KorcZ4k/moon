@@ -1,25 +1,23 @@
-# Teste sandbox de pagamentos
+# Teste de pagamentos com Stripe
 
 ## Objetivo
-Validar o fluxo completo: pedido -> checkout -> Mercado Pago -> webhook -> MongoDB -> Area do Cliente.
+Validar: pedido -> Stripe Checkout -> webhook -> MongoDB -> Área do Cliente.
 
-## 1. Configurar o Render
-Defina, no ambiente do servico web:
+## Render
 
-- `MERCADO_PAGO_MODE=sandbox`
-- `MERCADO_PAGO_ACCESS_TOKEN=<credencial de teste>`
-- `MERCADO_PAGO_WEBHOOK_SECRET=<segredo do webhook de teste>`
+Configure:
+
+- `STRIPE_SECRET_KEY=<chave de teste>`
+- `STRIPE_WEBHOOK_SECRET=<segredo do endpoint de teste>`
 - `PUBLIC_API_URL=https://kzsite.onrender.com`
-- `MONGODB_URI=<string de conexao existente>`
+- `MONGODB_URI=<conexão existente>`
 - `JWT_SECRET=<segredo existente>`
 
-Nunca adicione tokens ou segredos ao GitHub.
+Nunca adicione chaves ou segredos ao GitHub.
 
-## 2. Fazer deploy
-Aguarde o Render concluir o deploy do commit que contem a integracao de pagamentos.
+## Preflight
 
-## 3. Executar o preflight
-Localmente ou em um ambiente com Node.js 20+:
+Execute:
 
 `npm run preflight:payments`
 
@@ -27,59 +25,42 @@ Resultado esperado:
 
 - `Status: ok`
 - `Database: connected`
-- `Mercado Pago configured: true`
+- `Stripe configured: true`
 - `PRECHECK_OK`
 
-Se o resultado for diferente, nao prossiga para o checkout.
+## Fluxo funcional
 
-## 4. Teste funcional
-1. Crie uma conta de teste no site ou use uma conta de teste existente.
-2. Faça login.
-3. Escolha um produto comercial com preco fixo.
-4. Crie o pedido.
-5. Confirme que o pedido inicia como `pending_payment`.
-6. Inicie o checkout.
-7. Use exclusivamente as credenciais e meios de pagamento de teste fornecidos pelo Mercado Pago.
-8. Conclua o pagamento de teste.
+1. Faça login.
+2. Escolha um produto.
+3. Crie o pedido.
+4. Confirme `pending_payment`.
+5. Inicie o checkout.
+6. Use apenas meios de pagamento de teste da Stripe.
+7. Conclua ou cancele o teste.
 
-## 5. Validar webhook
-Confirme no painel do Mercado Pago que a notificacao foi entregue ao endpoint:
+## Webhook
 
-`https://kzsite.onrender.com/api/payments/mercado-pago/webhook`
+Endpoint:
 
-O servidor deve validar a assinatura e consultar o recurso de pagamento antes de alterar o pedido.
+`https://kzsite.onrender.com/api/payments/stripe/webhook`
 
-## 6. Validar MongoDB
-Confirme que o pedido correto foi atualizado:
+O pedido deve ser atualizado somente após um webhook autenticado.
 
-- `payment.provider = mercado_pago`
-- `payment.preferenceId` preenchido
-- `payment.paymentId` preenchido quando disponivel
-- `payment.status` atualizado
-- `status` do pedido coerente com o pagamento
-- novo evento no `history` quando houver mudanca de status
+## MongoDB
 
-## 7. Validar Area do Cliente
-Atualize a Area do Cliente e confirme que o pedido aparece apenas para o usuario dono do pedido.
+Confirme:
 
-## Cenarios minimos
+- `payment.provider = stripe`
+- `payment.preferenceId` contém o ID da Checkout Session
+- `payment.paymentId` é preenchido quando disponível
+- `payment.status` acompanha a confirmação
+- `history` não recebe eventos duplicados
 
-### Pagamento aprovado
-`pending_payment -> paid`
+## Cenários mínimos
 
-### Pagamento pendente
-Permanece em `pending_payment`.
+- aprovado: `pending_payment -> paid`
+- cancelado/expirado: estado coerente sem marcar como pago
+- webhook repetido: sem duplicar histórico
+- usuário diferente: não pode consultar ou pagar pedido alheio
 
-### Pagamento rejeitado ou cancelado
-Atualiza para `cancelled` quando o status recebido corresponder a rejeicao/cancelamento mapeada pelo backend.
-
-### Webhook repetido
-O mesmo evento nao deve criar entradas duplicadas no historico.
-
-### Usuario errado
-Um usuario autenticado diferente nao deve conseguir consultar ou pagar um pedido que nao lhe pertence.
-
-## Criterio de aprovacao da etapa
-A etapa de testes sandbox somente deve ser considerada aprovada quando o fluxo completo for executado com um pagamento de teste e a atualizacao final puder ser observada no MongoDB e na Area do Cliente.
-
-Somente depois disso `MERCADO_PAGO_MODE` pode ser alterado para `production`.
+O ambiente de produção só deve receber uma chave real depois que o fluxo de teste estiver aprovado ponta a ponta.
