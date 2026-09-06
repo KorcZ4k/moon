@@ -21,7 +21,7 @@ function getWhatsAppClient() {
   return twilio(sid, token);
 }
 
-function normalizePhone(phone) {
+function normalizeWhatsAppAddress(phone) {
   const value = String(phone || '').trim();
   if (!value) return '';
   if (value.startsWith('whatsapp:')) return value;
@@ -100,8 +100,8 @@ async function sendQuoteNotifications({ quote }) {
   }
 
   const whatsappClient = getWhatsAppClient();
-  const to = normalizePhone(quote.telefone);
-  const from = normalizePhone(process.env.TWILIO_WHATSAPP_NUMBER);
+  const to = normalizeWhatsAppAddress(quote.telefone);
+  const from = normalizeWhatsAppAddress(process.env.TWILIO_PHONE_NUMBER);
   if (whatsappClient && to && from) {
     try {
       await whatsappClient.messages.create({ from, to, body: quoteClientText({ nome: quote.nomeProponente, quoteId: quote.quoteId }) });
